@@ -5,57 +5,56 @@ const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
 const loadMore = document.querySelector(".load-more");
 let page = 1;
-loadMore.style.display = "none";
+loadMore.style.display = "none"
 
-searchForm.addEventListener("submit", handleSubmit);
+searchForm.addEventListener("submit", handleSubmit)
 
 function handleSubmit(event) {
-    event.preventDefault();
+event.preventDefault()
 
-    const { searchQuery } = event.currentTarget.elements;
-    const obj = {
-        searchFormValue: searchQuery.value
-    }
-
-    loadMore.addEventListener("click", handleClick);
+const { searchQuery } = event.currentTarget.elements;
+const obj = {
+    searchFormyValue: searchQuery.value
+}
 
     function handleClick() {
-    
+
         page += 1;
     
         searchingSystem(page)
         .then(data => {
-            gallery.insertAdjacentHTML("beforeend", createMarkup(data.hits))
-         if ( data.page === data.total_pages) {
-            loadMore.style.display = "inline";
-            Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
-         }
+            gallery.insertAdjacentHTML("beforeend", createMarkup(data.data.hits))
+            // console.log(data.data.hits)
+            if (page === 26) {
+                loadMore.style.display = "none"
+            }
+            // console.log(data.data.hits.length)
         })
         .catch(error => console.log(error))
     }
 
-    async function search() {
-        try {
-           const data = await searchingSystem();
+async function search() {
+   try {        
+    const data = await searchingSystem();
+    if (data.data.totalHits === 0) {
+        Notiflix.Notify.failure('Qui timide rogat docet negare');
+        loadMore.style.display = "none"
+    } else {
+        loadMore.style.display = "block"
+        Notiflix.Notify.success(`Hooray! We found ${data.data.totalHits} images.`);
+    }
+    // console.log(data.data)
+    gallery.innerHTML = createMarkup(data.data.hits)
+    //    console.log(createMarkup(data.hits))
+    } catch (error) {
+        console.log(error);
+    }
+};
 
-           gallery.innerHTML = createMarkup(data.hits);
-
-           if(data.page === data.total_pages) {
-            loadMore.style.display = "none";
-           }
-           return loadMore.style.display = "inline";
-        //    console.log(createMarkup(data.hits))
-        } catch (error) {
-            Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.")
-        }
-    };
-    
-    search()
-    
     async function searchingSystem(page = 1) {
         const BASE_URL = "https://pixabay.com/api/";
         const key = "41168195-d63dcd7c5ed901c12bfe9d8da";
-        const SEARCH = obj.searchFormValue;
+        const SEARCH = obj.searchFormyValue;
     
         const params = new URLSearchParams({
             key,
@@ -65,24 +64,20 @@ function handleSubmit(event) {
             safesearch: true,
             page: page,
         })
-    
-       try {
-        const results = await axios.get(`${BASE_URL}?${params}`);
-        if (results.data.hits.length === 0) {
-            Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.");
-            loadMore.style.display = "none";
-        }
-        Notiflix.Notify.success(`Hooray! We found ${results.data.totalHits} images.`);
-        return results.data;
-        // console.log(results.data)
-       } catch (error) {
-        console.log(error)
-       }
-    };
-    
-    searchingSystem()
-};
 
+        try {
+            const results = await axios.get(`${BASE_URL}?${params}`);
+            return results
+            // return console.log(results.data)
+        } catch(error) {
+            console.log(error);
+        }
+}
+loadMore.addEventListener("click", handleClick);
+search()
+searchingSystem()
+
+}
 function createMarkup(arr) {
     return arr.map(({webformatURL, tags, likes, views, comments, downloads}) => `
     <div class="photo-card">
@@ -104,3 +99,11 @@ function createMarkup(arr) {
 </div>
     `).join("");
 };
+
+
+// if (results.data.hits.length === 0) {
+//     Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.");
+//     loadMore.style.display = "none";
+// }
+// console.log("hello")
+// Notiflix.Notify.success(`Hooray! We found ${results.data.totalHits} images.`);
