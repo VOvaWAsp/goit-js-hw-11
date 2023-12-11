@@ -1,0 +1,14 @@
+.btn-search {
+border: 2px solid orange;
+border-radius: 15px;
+background-color: transparent;
+padding: 5px 8px;
+color: orange;
+}
+
+.btn-search:hover,
+.btn-search:focus {
+    background-color: orange;
+    color: black;
+    /* border: transparent; */
+}
