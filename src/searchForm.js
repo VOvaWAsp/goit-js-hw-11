@@ -5,6 +5,7 @@ const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
 const loadMore = document.querySelector(".load-more");
 let page = 1;
+let searchValue;
 loadMore.style.display = "none"
 // loadMore.style.display = "none"
 
@@ -15,9 +16,9 @@ event.preventDefault()
 page = 1;
 
 const { searchQuery } = event.currentTarget.elements;
+searchValue = searchQuery.value;
 loadMore.addEventListener("click", handleClick);
 search()
-return searchValue = searchQuery;
 // searchingSystem()
 // const obj = {
 //     searchFormyValue: searchQuery.value
@@ -61,7 +62,7 @@ gallery.innerHTML = createMarkup(data.data.hits)
 async function searchingSystem(page = 1) {
     const BASE_URL = "https://pixabay.com/api/";
     const key = "41168195-d63dcd7c5ed901c12bfe9d8da";
-    const q = searchValue.value;
+    const q = searchValue;
 
     // const params = new URLSearchParams({
     //     key,
@@ -120,3 +121,16 @@ function createMarkup(arr) {
 // }
 // console.log("hello")
 // Notiflix.Notify.success(`Hooray! We found ${results.data.totalHits} images.`);
+
+// let page = 1;
+// loadMore.style.display = "none";
+// searchForm.addEventListener("submit", handleSubmit);
+// let searchValue; // оголошення змінної searchValue
+// function handleSubmit(event) {
+//     event.preventDefault();
+//     page = 1;
+//     const { searchQuery } = event.currentTarget.elements;
+//     loadMore.addEventListener("click", handleClick);
+//     searchValue = searchQuery; // присвоєння значення searchQuery змінній searchValue
+//     search();
+// }
