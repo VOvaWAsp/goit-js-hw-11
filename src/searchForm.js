@@ -17,7 +17,7 @@ page = 1;
 const { searchQuery } = event.currentTarget.elements;
 loadMore.addEventListener("click", handleClick);
 search()
-return searchValue = searchQuery.value;
+return searchValue = searchQuery;
 // searchingSystem()
 // const obj = {
 //     searchFormyValue: searchQuery.value
@@ -61,7 +61,7 @@ gallery.innerHTML = createMarkup(data.data.hits)
 async function searchingSystem(page = 1) {
     const BASE_URL = "https://pixabay.com/api/";
     const key = "41168195-d63dcd7c5ed901c12bfe9d8da";
-    const q = searchValue;
+    const q = searchValue.value;
 
     // const params = new URLSearchParams({
     //     key,
