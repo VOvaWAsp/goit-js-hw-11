@@ -15,9 +15,9 @@ event.preventDefault()
 page = 1;
 
 const { searchQuery } = event.currentTarget.elements;
-searchValue = searchQuery.value;
 loadMore.addEventListener("click", handleClick);
 search()
+return searchValue = searchQuery.value;
 // searchingSystem()
 // const obj = {
 //     searchFormyValue: searchQuery.value
