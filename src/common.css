@@ -1,3 +1,7 @@
+* {
+    padding: 15px;
+}
+
 .search-form {
     margin-top: 50px;
     display: flex;
@@ -12,10 +16,10 @@
     height: 50px;
     background-color: #1e272e;
   /*   margin: 20vh auto; */
-    position: absolute;
-    top: 50px;
-    left: 500px;
-    transform: translate(-50%, -50%);
+    /* position: absolute; */
+    /* top: 50px;
+    left: 500px; */
+    /* transform: translate(-50%, -50%); */
     border-radius: 4rem;
     padding: 10px;
     display: flex;
@@ -65,4 +69,54 @@ color: orange;
     background-color: orange;
     color: black;
     /* border: transparent; */
+}
+
+.gallery {
+
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+}
+
+.photo-card { 
+    border-top: transparent;
+    border: 1px solid black;
+    /* padding: 0; */
+    /* border: 2px solid black; */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+}
+
+@media (min-width: 768px) {
+    .photo-card { 
+        width: calc((100% - 70px) / 2);
+    }
+}
+.imag-card {
+    /* max-width: 500px; */
+    max-height: 300px;
+    border: 1px solid black;
+    padding: 0;
+}
+
+.load-more {
+border: 2px solid black;
+border-radius: 15px;
+background-color: transparent;
+padding: 5px 8px;
+color: black;
+margin: auto;
+}
+
+.load-more:hover,
+.load-more:focus {
+    background-color: black;
+    color: white;
+    transition: color 500ms ease-in-out, background-color 250ms ease-in-out;
 }

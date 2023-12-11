@@ -32,11 +32,14 @@ function handleClick() {
     searchingSystem(page)
     .then(data => {
         gallery.insertAdjacentHTML("beforeend", createMarkup(data.data.hits))
+        // loadMore.style.display = "none"
+        // // console.log(data.data.hits)
         // console.log(data.data.hits)
-        // if (page === 1) {
-        //         loadMore.style.visibility = "hidden"
-        // }
-        // console.log(data.data.hits)
+        if (page > data.data.hits) {
+            loadMore.style.display = "none"
+            Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
+        }
+        // console.log(data)
     })
     .catch(error => console.log(error))
 }
@@ -95,7 +98,7 @@ async function searchingSystem(page = 1) {
 function createMarkup(arr) {
     return arr.map(({webformatURL, tags, likes, views, comments, downloads}) => `
     <div class="photo-card">
-<img src="${webformatURL}" alt="${tags}" loading="lazy" />
+<img class="imag-card" src="${webformatURL}" alt="${tags}" loading="lazy"/>
 <div class="info">
 <p class="info-item">
   <b>Likes:${likes}</b>
