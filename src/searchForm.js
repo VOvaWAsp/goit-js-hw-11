@@ -30,7 +30,7 @@ search()
 }
 
 function handleClick(event) {
-    // event.preventDefault();
+    event.preventDefault();
     if (event.currentTarget === event.Target) {
         return galleries.refresh();
         }
