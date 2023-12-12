@@ -57,7 +57,7 @@
   
 
 .btn-search {
-    
+
 border: 2px solid orange;
 border-radius: 15px;
 background-color: transparent;
@@ -125,4 +125,14 @@ margin: auto;
 .info-item {
     color: orange;
     font-family: 'Lobster';
+}
+
+.link-card {
+    display: block;
+    text-decoration: none;
+    height: 100%;
+  }
+
+.link-card:hover {
+  cursor: zoom-in;
 }

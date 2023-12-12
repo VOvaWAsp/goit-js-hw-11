@@ -1,8 +1,8 @@
 import axios from "axios";
 import Notiflix from 'notiflix';
-// Described in documentation
-// import SimpleLightbox from "simplelightbox";
-// import "simplelightbox/dist/simple-lightbox.min.css";
+Described in documentation
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
@@ -30,15 +30,16 @@ search()
 }
 
 function handleClick(event) {
+    // event.preventDefault();
     if (event.currentTarget === event.Target) {
         return galleries.refresh();
         }
         
-        let galleries = new SimpleLightbox('.gallery a')
+        let galleries = new SimpleLightbox('.photo-card a')
         galleries.on('show.simplelightbox', function () {
         `<img src="${largeImageURL}" alt="${tags}">`
         })
-    // event.preventDefault();
+    event.preventDefault();
     // loadMore.style.display = "none"
     page += 1;
 
@@ -101,6 +102,9 @@ async function searchingSystem(page = 1) {
             }
         });
         // loadMore.style.display = "none"
+        if (q === '') {
+            return;
+        } 
         return results
         // return console.log(results.data)
     } catch(error) {
@@ -111,7 +115,7 @@ async function searchingSystem(page = 1) {
 function createMarkup(arr) {
     return arr.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => `
     <div class="photo-card">
-    <a href="${largeImageURL}">
+    <a class="link-catd" href="${largeImageURL}">
 <img class="imag-card" src="${webformatURL}" alt="${tags}" loading="lazy"/>
 </a>
 <div class="info">
