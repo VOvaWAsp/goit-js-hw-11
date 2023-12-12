@@ -1,6 +1,6 @@
 import axios from "axios";
 import Notiflix from 'notiflix';
-Described in documentation
+// Described in documentation
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
