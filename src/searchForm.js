@@ -1,6 +1,7 @@
 import axios from "axios";
 import Notiflix from 'notiflix';
 // Described in documentation
+// import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
@@ -30,8 +31,8 @@ search()
 }
 
 function handleClick(event) {
-    event.preventDefault();
-    if (event.currentTarget === event.Target) {
+    event.preventDefault()
+    if (event.currentTarget === event.target) {
         return galleries.refresh();
         }
         
@@ -39,7 +40,7 @@ function handleClick(event) {
         galleries.on('show.simplelightbox', function () {
         `<img src="${largeImageURL}" alt="${tags}">`
         })
-    event.preventDefault();
+    // event.preventDefault();
     // loadMore.style.display = "none"
     page += 1;
 
