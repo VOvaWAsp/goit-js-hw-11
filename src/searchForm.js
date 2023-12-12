@@ -1,11 +1,15 @@
 import axios from "axios";
 import Notiflix from 'notiflix';
+// Described in documentation
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
 const loadMore = document.querySelector(".load-more");
 let page = 1;
 let searchValue;
+let per_page = 20;
 loadMore.style.display = "none"
 // loadMore.style.display = "none"
 
@@ -26,6 +30,7 @@ search()
 }
 
 function handleClick() {
+    // event.preventDefault();
     // loadMore.style.display = "none"
     page += 1;
 
@@ -35,10 +40,6 @@ function handleClick() {
         // loadMore.style.display = "none"
         // // console.log(data.data.hits)
         // console.log(data.data.hits)
-        if (page > data.data.hits) {
-            loadMore.style.display = "none"
-            Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
-        }
         // console.log(data)
     })
     .catch(error => console.log(error))
@@ -53,6 +54,10 @@ if (data.data.totalHits === 0) {
 } else {
     loadMore.style.display = "block"
     Notiflix.Notify.success(`Hooray! We found ${data.data.totalHits} images.`);
+}
+if (per_page >= data.data.totalHits) {
+    loadMore.style.display = "none"
+    Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
 }
 // console.log(data.data)
 gallery.innerHTML = createMarkup(data.data.hits)
@@ -96,26 +101,29 @@ async function searchingSystem(page = 1) {
 }
 
 function createMarkup(arr) {
-    return arr.map(({webformatURL, tags, likes, views, comments, downloads}) => `
+    return arr.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => `
     <div class="photo-card">
+    <a href="${largeImageURL}">
 <img class="imag-card" src="${webformatURL}" alt="${tags}" loading="lazy"/>
+</a>
 <div class="info">
 <p class="info-item">
-  <b>Likes:${likes}</b>
+  <b>Likes: ${likes}</b>
 </p>
 <p class="info-item">
-  <b>Views:${views}</b>
+  <b>Views: ${views}</b>
 </p>
 <p class="info-item">
-  <b>Comments:${comments}</b>
+  <b>Comments: ${comments}</b>
 </p>
 <p class="info-item">
-  <b>Downloads:${downloads}</b>
+  <b>Downloads: ${downloads}</b>
 </p>
 </div>
 </div>
     `).join("");
 };
+
 
 
 // if (results.data.hits.length === 0) {

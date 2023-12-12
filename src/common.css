@@ -120,3 +120,8 @@ margin: auto;
     color: white;
     transition: color 500ms ease-in-out, background-color 250ms ease-in-out;
 }
+
+.info-item {
+    color: orange;
+    font-family: 'Lobster';
+}
