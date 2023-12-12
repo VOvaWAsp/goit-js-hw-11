@@ -1,8 +1,8 @@
 import axios from "axios";
 import Notiflix from 'notiflix';
 // Described in documentation
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+// import SimpleLightbox from "simplelightbox";
+// import "simplelightbox/dist/simple-lightbox.min.css";
 
 const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
@@ -29,7 +29,15 @@ search()
 // }
 }
 
-function handleClick() {
+function handleClick(event) {
+    if (event.currentTarget === event.Target) {
+        return galleries.refresh();
+        }
+        
+        let galleries = new SimpleLightbox('.gallery a')
+        galleries.on('show.simplelightbox', function () {
+        `<img src="${largeImageURL}" alt="${tags}">`
+        })
     // event.preventDefault();
     // loadMore.style.display = "none"
     page += 1;
@@ -123,8 +131,6 @@ function createMarkup(arr) {
 </div>
     `).join("");
 };
-
-
 
 // if (results.data.hits.length === 0) {
 //     Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.");
