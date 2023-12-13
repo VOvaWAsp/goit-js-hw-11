@@ -16,6 +16,20 @@ loadMore.style.display = "none"
 
 searchForm.addEventListener("submit", handleSubmit)
 
+let lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    captionPosition: 'bottom',
+  });
+  gallery.addEventListener("click", clickForm)
+function clickForm(event) {
+    event.preventDefault();
+        lightbox.on('show.simplelightbox', function () {
+        `<img src="${largeImageURL}" alt="${tags}">`
+        })
+        lightbox.refresh();
+}
+  
 function handleSubmit(event) {
 event.preventDefault()
 page = 1;
@@ -27,25 +41,21 @@ search()
 // searchingSystem()
 // const obj = {
 //     searchFormyValue: searchQuery.value
-// }
 }
 
-function handleClick(event) {
-    event.preventDefault()
-    if (event.currentTarget === event.target) {
-        return galleries.refresh();
-        }
-        
-        let galleries = new SimpleLightbox('.photo-card a')
-        galleries.on('show.simplelightbox', function () {
-        `<img src="${largeImageURL}" alt="${tags}">`
-        })
+function handleClick() {
+    // event.preventDefault();
     // event.preventDefault();
     // loadMore.style.display = "none"
     page += 1;
 
     searchingSystem(page)
     .then(data => {
+        // if (per_page >= data.data.hits) {
+        //     loadMore.style.display = "none"
+        //     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
+        // }
+        console.log(data.data.hits)
         gallery.insertAdjacentHTML("beforeend", createMarkup(data.data.hits))
         // loadMore.style.display = "none"
         // // console.log(data.data.hits)
@@ -57,18 +67,19 @@ function handleClick(event) {
 
 async function search() {
 try {        
-const data = await searchingSystem();
+const data = await searchingSystem(page, per_page);
 if (data.data.totalHits === 0) {
     Notiflix.Notify.failure('Qui timide rogat docet negare');
     loadMore.style.display = "none"
 } else {
     loadMore.style.display = "block"
     Notiflix.Notify.success(`Hooray! We found ${data.data.totalHits} images.`);
-}
+} 
 if (per_page >= data.data.totalHits) {
     loadMore.style.display = "none"
     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
-}
+} 
+// console.log(+(data.data.hits))
 // console.log(data.data)
 gallery.innerHTML = createMarkup(data.data.hits)
 //    console.log(createMarkup(data.hits))
@@ -100,12 +111,18 @@ async function searchingSystem(page = 1) {
                 orientation: "horizontal",
                 safesearch: true,
                 page: page,
+                per_page,
             }
         });
         // loadMore.style.display = "none"
         if (q === '') {
             return;
         } 
+        if (per_page >= results.data.hits) {
+            loadMore.style.display = 'none';
+            Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+            // console.log(data) 
+        }
         return results
         // return console.log(results.data)
     } catch(error) {
@@ -114,7 +131,7 @@ async function searchingSystem(page = 1) {
 }
 
 function createMarkup(arr) {
-    return arr.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => `
+   return arr.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => `
     <div class="photo-card">
     <a class="link-catd" href="${largeImageURL}">
 <img class="imag-card" src="${webformatURL}" alt="${tags}" loading="lazy"/>
