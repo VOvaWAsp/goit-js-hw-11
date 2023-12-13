@@ -2,8 +2,8 @@ import axios from "axios";
 import Notiflix from 'notiflix';
 // Described in documentation
 // import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm";
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+// import SimpleLightbox from "simplelightbox";
+// import "simplelightbox/dist/simple-lightbox.min.css";
 
 const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
@@ -16,19 +16,19 @@ loadMore.style.display = "none"
 
 searchForm.addEventListener("submit", handleSubmit)
 
-let lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-    captionPosition: 'bottom',
-  });
-  gallery.addEventListener("click", clickForm)
-function clickForm(event) {
-    event.preventDefault();
-        lightbox.on('show.simplelightbox', function () {
-        `<img src="${largeImageURL}" alt="${tags}">`
-        })
-        lightbox.refresh();
-}
+// let lightbox = new SimpleLightbox('.gallery a', {
+//     captionsData: 'alt',
+//     captionDelay: 250,
+//     captionPosition: 'bottom',
+//   });
+//   gallery.addEventListener("click", clickForm)
+// function clickForm(event) {
+//     event.preventDefault();
+//         lightbox.on('show.simplelightbox', function () {
+//         `<img src="${largeImageURL}" alt="${tags}">`
+//         })
+//         lightbox.refresh();
+// }
   
 function handleSubmit(event) {
 event.preventDefault()
@@ -133,9 +133,7 @@ async function searchingSystem(page = 1) {
 function createMarkup(arr) {
    return arr.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => `
     <div class="photo-card">
-    <a class="link-catd" href="${largeImageURL}">
 <img class="imag-card" src="${webformatURL}" alt="${tags}" loading="lazy"/>
-</a>
 <div class="info">
 <p class="info-item">
   <b>Likes: ${likes}</b>
